@@ -13,5 +13,5 @@ by Daniela Flores & Javiera Jorquera
 
 ## Controls
 
-- Player one: keys W, A, S, D
-- Player two: keys up, left, down, right
+- Player one: key left and key right.
+- Player two: key A to move left and key D to move right.
