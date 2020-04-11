@@ -80,7 +80,7 @@ const buildPlayersObservable = (players) => {
     return keyboard;
   }, []))
 
-  const isPlayerKeyCode = keyCode => PLAYER_1_KEY_CODES.includes(keyCode) || PLAYER_1_KEY_CODES.includes(keyCode);
+  const isPlayerKeyCode = keyCode => PLAYER_1_KEY_CODES.includes(keyCode) || PLAYER_2_KEY_CODES.includes(keyCode);
 
   return keyboard$.pipe(map(keyCodes => keyCodes.filter(isPlayerKeyCode)));
 }
