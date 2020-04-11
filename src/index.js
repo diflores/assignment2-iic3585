@@ -55,7 +55,7 @@ const KEYS = {
 
 const getKeyCode = (event) => event.keycode || event.which;
 
-const buildPlayersObservable = (players) => {
+const buildPlayersObservable = () => {
   const keydown$ = fromEvent(document, 'keydown').pipe(
     map(getKeyCode),
     map(keyCode => ({ code: keyCode, type: 'down' })),
@@ -76,7 +76,6 @@ const buildPlayersObservable = (players) => {
 
       if (idx >= 0) keyboard.splice(idx, 1);
     }
-
     return keyboard;
   }, []))
 
@@ -103,10 +102,7 @@ const buildTimeObservable = (ms) => {
 window.onload = () => {
   gameSetup();
 
-  const players$ = buildPlayersObservable([
-    { x: 400, y: 400, vX: 0, vY: 0 },
-    { x: 400, y: 400, vX: 0, vY: 0 },
-  ]);
+  const players$ = buildPlayersObservable();
   const time$ = buildTimeObservable(TICKS_MS);
   const collisions$ = buildCollisionsObservable();
 
@@ -169,16 +165,35 @@ window.onload = () => {
         })
       }
 
+      // add move to array if players changed position
+      const playerOne = prevState.players[0];
+      const playerTwo = prevState.players[1];
+      const lastPointOfPlayerOne = playerOne[playerOne.length - 1];
+      const lastPointOfPlayerTwo = playerTwo[playerTwo.length - 1];
+      const newPoints = move(decelerate(accelerate([
+        lastPointOfPlayerOne,
+        lastPointOfPlayerTwo,
+      ])));
+      playerOne.push(newPoints[0]);
+      playerTwo.push(newPoints[1]);
+      /*
+      if (newPoints[0].x != lastPointOfPlayerOne.x || newPoints[0].y != lastPointOfPlayerOne.y) {
+        playerOne.push(newPoints[0]);
+      }
+      if (newPoints[1].x != lastPointOfPlayerTwo.x || newPoints[1].y != lastPointOfPlayerTwo.y) {
+        playerTwo.push(newPoints[1]);
+      }
+      */
+
       return {
         ...prevState,
-        players: move(decelerate(accelerate(prevState.players))),
         collisions,
       };
     },
     {
       players: [
-        { x: 400, y: 400, vX: 0, vY: 0 },
-        { x: 400, y: 400, vX: 0, vY: 0 },
+        [{ x: 400, y: 400, vX: 0, vY: 0 }],
+        [{ x: 400, y: 400, vX: 0, vY: 0 }],
       ],
       collisions: [0, 0],
     }

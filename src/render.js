@@ -1,43 +1,44 @@
 const paper = require("paper");
 
 const COLORS = {
-    players: ["#1e90ff", "#9f0000"],
+  players: ["#1e90ff", "#9f0000"],
 };
 
 const EVENTS = {
-    COLLISION: event => new CustomEvent("collision", { detail: event }),
+  COLLISION: event => new CustomEvent("collision", { detail: event }),
 };
 
 const player = (player, index) => {
-    const { x, y } = player;
+  const { x, y } = player[player.length - 1];
 
-    const p = new paper.Point(x, y);
-    const path = new paper.Path();
-    path.strokeColor = COLORS.players[index];
-    path.strokeWidth = 20;
-    path.add(new paper.Point(p));
-    path.add(new paper.Point(p.x + 10, p.y + 10));
-    path.smooth()
-    return path;
+  const p = new paper.Point(x, y);
+  const path = new paper.Path();
+  path.strokeColor = COLORS.players[index];
+  path.strokeWidth = 8;
+  path.add(p);
+  path.add(new paper.Point(p.x + 10, p.y));
+  path.smooth()
+  return path;
 };
 
 const update = state => {
-    paper.project.clear();
-    const _players = state.players.map(player);
+  paper.project.clear();
+  const _players = state.players.map(player);
 
-    if (_players[0].intersects(_players[1]))
-        document.dispatchEvent(EVENTS.COLLISION({ player: 0 }));
+  if (_players[0].intersects(_players[1])) {
+    document.dispatchEvent(EVENTS.COLLISION({ player: 0 }));
+  }
 
-    paper.view.draw();
+  paper.view.draw();
 };
 
 const gameSetup = () => {
-    const canvas = document.getElementById("canvas");
-    paper.setup(canvas);
+  const canvas = document.getElementById("canvas");
+  paper.setup(canvas);
 };
 
 const renderGame = state => {
-    update(state);
+  update(state);
 };
 
 export { renderGame, gameSetup };
