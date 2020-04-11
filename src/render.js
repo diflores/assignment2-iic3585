@@ -12,7 +12,7 @@ const player = (player, index) => {
   const { x, y } = player;
 
   const p = new paper.Point(x, y);
-  const path = new paper.Path.Circle(p, 20);
+  const path = new paper.Path.Circle(p, 8);
   path.fillColor = COLORS.players[index];
 
   return path;
