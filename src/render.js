@@ -9,14 +9,12 @@ const EVENTS = {
 };
 
 const player = (player, index) => {
-  const { x, y } = player[player.length - 1];
-
-  const p = new paper.Point(x, y);
   const path = new paper.Path();
   path.strokeColor = COLORS.players[index];
-  path.strokeWidth = 8;
-  path.add(p);
-  path.add(new paper.Point(p.x + 10, p.y));
+  path.strokeWidth = 20;
+  player.forEach((point, index) => {
+    path.add(new paper.Point(point.x, point.y));
+  });
   path.smooth()
   return path;
 };
