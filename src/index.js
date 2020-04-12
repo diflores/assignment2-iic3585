@@ -13,8 +13,6 @@ import {
 const { renderGame, gameSetup } = require('./render');
 
 const BOX_SIZE = [1380, 720];
-const ACCELERATION = 0.8;
-const DECELERATION = 0.5;
 const VELOCITY = 1;
 const ANGLE_DIFFERENCE = 5;
 const TICKS_MS = 10;
@@ -22,17 +20,15 @@ const PLAYER_1_KEY_CODES = [37, 39];
 const PLAYER_2_KEY_CODES = [65, 68];
 
 const MOVES = {
-  left: (player, speed) => {
+  left: (player) => {
     return {
       ...player,
-      vX: player.vX - speed,
       a: player.a - ANGLE_DIFFERENCE,
     };
   },
-  right: (player, speed) => {
+  right: (player) => {
     return {
       ...player,
-      vX: player.vX + speed,
       a: player.a + ANGLE_DIFFERENCE,
     };
   },
@@ -133,11 +129,11 @@ window.onload = () => {
 
         return [
           movesPlayer1.reduce(
-            (prevPlayer, _function) => _function(prevPlayer, ACCELERATION),
+            (prevPlayer, _function) => _function(prevPlayer),
             players[0],
           ),
           movesPlayer2.reduce(
-            (prevPlayer, _function) => _function(prevPlayer, ACCELERATION),
+            (prevPlayer, _function) => _function(prevPlayer),
             players[1],
           ),
         ];
