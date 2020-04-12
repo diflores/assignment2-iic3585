@@ -13,8 +13,10 @@ import {
 const { renderGame, gameSetup } = require('./render');
 
 const BOX_SIZE = [1380, 720];
-const ACCELERATION = 2;
-const DECELERATION = 1;
+const ACCELERATION = 0.8;
+const DECELERATION = 0.5;
+const VELOCITY = 1;
+const ANGLE_DIFFERENCE = 5;
 const TICKS_MS = 10;
 const PLAYER_1_KEY_CODES = [37, 39];
 const PLAYER_2_KEY_CODES = [65, 68];
@@ -24,12 +26,14 @@ const MOVES = {
     return {
       ...player,
       vX: player.vX - speed,
+      a: player.a - ANGLE_DIFFERENCE,
     };
   },
   right: (player, speed) => {
     return {
       ...player,
       vX: player.vX + speed,
+      a: player.a + ANGLE_DIFFERENCE,
     };
   },
 }
@@ -139,26 +143,11 @@ window.onload = () => {
         ];
       };
 
-      const decelerate = (players) => {
-        return players.map(p => {
-          const decrease = (v, amount) => {
-            if (v > 0 && v - amount > 0) return v - amount;
-            else if (v > 0 && v - amount <= 0) return 0;
-            else if (v < 0 && v + amount < 0) return v + amount;
-            else if (v < 0 && v + amount >= 0) return 0;
-
-            return v
-          };
-
-          return { ...p, vX: decrease(p.vX, DECELERATION), vY: decrease(p.vY, DECELERATION) }
-        })
-      };
-
       const move = (players) => {
         return players.map(p => {
-          const newPossibleX = p.x + p.vX
+          const newPossibleX = p.x + VELOCITY * Math.cos(Math.PI * p.a / 180)
           const newX = 0 <= newPossibleX && newPossibleX <= BOX_SIZE[0] ? newPossibleX : p.x;
-          const newPossibleY = p.y + p.vY
+          const newPossibleY = p.y + VELOCITY * Math.sin(Math.PI * p.a / 180)
           const newY = 0 <= newPossibleY && newPossibleY <= BOX_SIZE[1] ? newPossibleY : p.y;
 
           return { ...p, x: newX, y: newY };
@@ -170,10 +159,10 @@ window.onload = () => {
       const playerTwo = prevState.players[1];
       const lastPointOfPlayerOne = playerOne[playerOne.length - 1];
       const lastPointOfPlayerTwo = playerTwo[playerTwo.length - 1];
-      const newPoints = move(decelerate(accelerate([
+      const newPoints = move(accelerate([
         lastPointOfPlayerOne,
         lastPointOfPlayerTwo,
-      ])));
+      ]));
       playerOne.push(newPoints[0]);
       playerTwo.push(newPoints[1]);
       /*
@@ -192,8 +181,8 @@ window.onload = () => {
     },
     {
       players: [
-        [{ x: 400, y: 400, vX: 0, vY: 0 }],
-        [{ x: 400, y: 400, vX: 0, vY: 0 }],
+        [{ x: 400, y: 400, a: 0}],
+        [{ x: 400, y: 400, a: 0}],
       ],
       collisions: [0, 0],
     }

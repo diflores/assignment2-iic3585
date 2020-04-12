@@ -11,7 +11,7 @@ const EVENTS = {
 const player = (player, index) => {
   const path = new paper.Path();
   path.strokeColor = COLORS.players[index];
-  path.strokeWidth = 20;
+  path.strokeWidth = 8;
   player.forEach((point, index) => {
     path.add(new paper.Point(point.x, point.y));
   });
