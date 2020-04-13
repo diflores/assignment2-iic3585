@@ -4,6 +4,7 @@ by Daniela Flores & Javiera Jorquera
 ## Curvitas
 
 ![curvitas](curvitas.png)
+![curvitas_game_over](game_over.png)
 
 ## Instructions to run the game
 

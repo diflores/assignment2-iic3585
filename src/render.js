@@ -6,7 +6,6 @@ const COLORS = {
 
 const EVENTS = {
   COLLISION: event => new CustomEvent("collision", { detail: event }),
-  DEATH: event => new CustomEvent("death", { detail: event }),
 };
 
 const player = (player, index) => {
@@ -36,12 +35,10 @@ const update = state => {
 
   document.dispatchEvent(EVENTS.COLLISION({ player: 0 }));
   if (_players[0].intersects(_tails[1])) {
-    console.log('evento muerte para 1');
-    document.dispatchEvent(EVENTS.DEATH({ player: 0 }));
+    alert(`GAME OVER! The winner es player 2. Refresh the page to play again.`);
   }
   if (_players[1].intersects(_tails[0])) {
-    console.log('evento muerte para 2');
-    document.dispatchEvent(EVENTS.DEATH({ player: 1 }));
+    alert(`GAME OVER! The winner es player 1. Refresh the page to play again.`);
   }
 
   paper.view.draw();
