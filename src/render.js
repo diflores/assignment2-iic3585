@@ -10,16 +10,6 @@ const EVENTS = {
 };
 
 const player = (player, index) => {
-  /*
-  const path = new paper.Path();
-  path.strokeColor = COLORS.players[index];
-  path.strokeWidth = 10;
-  player.forEach((point, index) => {
-    path.add(new paper.Point(point.x, point.y));
-  });
-  path.smooth()
-  return path;
-  */
   const { x, y } = player[player.length - 1];
   const p = new paper.Point(x, y);
   const path = new paper.Path.Circle(p, 4);
@@ -39,8 +29,6 @@ const tail = (player, index) => {
   return path;
 };
 
-
-
 const update = state => {
   paper.project.clear();
   const _players = state.players.map(player);
@@ -48,9 +36,11 @@ const update = state => {
 
   document.dispatchEvent(EVENTS.COLLISION({ player: 0 }));
   if (_players[0].intersects(_tails[1])) {
+    console.log('evento muerte para 1');
     document.dispatchEvent(EVENTS.DEATH({ player: 0 }));
   }
   if (_players[1].intersects(_tails[0])) {
+    console.log('evento muerte para 2');
     document.dispatchEvent(EVENTS.DEATH({ player: 1 }));
   }
 

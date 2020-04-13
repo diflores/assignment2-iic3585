@@ -150,7 +150,6 @@ window.onload = () => {
         })
       }
 
-      // add move to array if players changed position
       const playerOne = prevState.players[0];
       const playerTwo = prevState.players[1];
       const lastPointOfPlayerOne = playerOne[playerOne.length - 1];
@@ -161,14 +160,6 @@ window.onload = () => {
       ]));
       playerOne.push(newPoints[0]);
       playerTwo.push(newPoints[1]);
-      /*
-      if (newPoints[0].x != lastPointOfPlayerOne.x || newPoints[0].y != lastPointOfPlayerOne.y) {
-        playerOne.push(newPoints[0]);
-      }
-      if (newPoints[1].x != lastPointOfPlayerTwo.x || newPoints[1].y != lastPointOfPlayerTwo.y) {
-        playerTwo.push(newPoints[1]);
-      }
-      */
 
       return {
         ...prevState,
