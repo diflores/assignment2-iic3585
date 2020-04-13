@@ -35,10 +35,10 @@ const update = state => {
 
   document.dispatchEvent(EVENTS.COLLISION({ player: 0 }));
   if (_players[0].intersects(_tails[1])) {
-    alert(`GAME OVER! The winner es player 2. Refresh the page to play again.`);
+    alert(`GAME OVER! The winner is player 2. Refresh the page to play again.`);
   }
   if (_players[1].intersects(_tails[0])) {
-    alert(`GAME OVER! The winner es player 1. Refresh the page to play again.`);
+    alert(`GAME OVER! The winner is player 1. Refresh the page to play again.`);
   }
 
   paper.view.draw();
