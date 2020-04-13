@@ -6,25 +6,52 @@ const COLORS = {
 
 const EVENTS = {
   COLLISION: event => new CustomEvent("collision", { detail: event }),
+  DEATH: event => new CustomEvent("death", { detail: event }),
 };
 
 const player = (player, index) => {
+  /*
   const path = new paper.Path();
   path.strokeColor = COLORS.players[index];
-  path.strokeWidth = 8;
+  path.strokeWidth = 10;
   player.forEach((point, index) => {
+    path.add(new paper.Point(point.x, point.y));
+  });
+  path.smooth()
+  return path;
+  */
+  const { x, y } = player[player.length - 1];
+  const p = new paper.Point(x, y);
+  const path = new paper.Path.Circle(p, 4);
+  path.strokeColor = COLORS.players[index];
+  path.strokeWidth = 10;
+  return path;
+};
+
+const tail = (player, index) => {
+  const path = new paper.Path();
+  path.strokeColor = COLORS.players[index];
+  path.strokeWidth = 10;
+  player.slice(1).forEach((point, index) => {
     path.add(new paper.Point(point.x, point.y));
   });
   path.smooth()
   return path;
 };
 
+
+
 const update = state => {
   paper.project.clear();
   const _players = state.players.map(player);
+  const _tails = state.players.map(tail);
 
-  if (_players[0].intersects(_players[1])) {
-    document.dispatchEvent(EVENTS.COLLISION({ player: 0 }));
+  document.dispatchEvent(EVENTS.COLLISION({ player: 0 }));
+  if (_players[0].intersects(_tails[1])) {
+    document.dispatchEvent(EVENTS.DEATH({ player: 0 }));
+  }
+  if (_players[1].intersects(_tails[0])) {
+    document.dispatchEvent(EVENTS.DEATH({ player: 1 }));
   }
 
   paper.view.draw();

@@ -3,7 +3,7 @@ by Daniela Flores & Javiera Jorquera
 
 ## Curvitas
 
-[aquí alguna imagen del juego??]
+![curvitas](curvitas.png)
 
 ## Instructions to run the game
 
