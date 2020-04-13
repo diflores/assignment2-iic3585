@@ -1,14 +1,11 @@
 const _ = require('lodash');
-import { distinctUntilChanged, filter, map, scan, throttleTime } from 'rxjs/operators';
+import { distinctUntilChanged, map, scan, throttleTime } from 'rxjs/operators';
 import {
   combineLatest,
   Observable,
   fromEvent,
   interval,
   merge,
-  from,
-  zip,
-  of,
 } from 'rxjs';
 const { renderGame, gameSetup } = require('./render');
 
