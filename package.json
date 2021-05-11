@@ -4,7 +4,7 @@
     "build": "webpack --mode=development"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "paper": "^0.12.4",
     "rxjs": "^6.5.5"
   },
